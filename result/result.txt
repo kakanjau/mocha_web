@@ -1,0 +1,42 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2015-01-16T05:48:39.973Z",
+    "end": "2015-01-16T05:48:43.784Z",
+    "duration": 3811
+  },
+  "tests": [
+    {
+      "title": "打开慧驾页面",
+      "fullTitle": "登录慧驾 打开慧驾页面",
+      "duration": 3411,
+      "err": {}
+    },
+    {
+      "title": "填写登录信息",
+      "fullTitle": "登录慧驾 填写登录信息",
+      "duration": 392,
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "打开慧驾页面",
+      "fullTitle": "登录慧驾 打开慧驾页面",
+      "duration": 3411,
+      "err": {}
+    },
+    {
+      "title": "填写登录信息",
+      "fullTitle": "登录慧驾 填写登录信息",
+      "duration": 392,
+      "err": {}
+    }
+  ]
+}

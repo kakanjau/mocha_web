@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+  body
+    .dercrip
+      -var d = new Date(stats.start);
+      -d = [d.getFullYear(), d.getMonth()+1, d.getDate()].join('-');
+      div: span 测试时间：#{d} 
+      div: span 测试数量：#{stats.tests}
+      div: span 测试通过：#{stats.passes}
+      div: span 测试失败：#{stats.failures}
+
+    .passed
+      ul
+        each pass in passes
+          li
+            span #{pass.title}
+            span #{pass.fullTitle}
+            span #{pass.duration}
+
+    .failures
+      ul
+        each failure in failures
+          li
+            span #{failure.title}
+            span #{failure.fullTitle}
+            span #{failure.duration}

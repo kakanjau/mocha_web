@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+  body
+    div
+      ul
+        each file in files
+          li
+            if /\.[^(json)]+$/.test(file)
+              = file
+            else
+              a(href=url+file) #{file}

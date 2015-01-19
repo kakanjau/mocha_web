@@ -1,0 +1,1 @@
+mocha > result/result.txt 2>&1
