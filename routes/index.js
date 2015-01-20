@@ -7,9 +7,18 @@ var resultPath = './result';
 /* GET home page. */
 router.get(/\.json$/, function(req, res, next){
     var filePath = resultPath + req.url;
+    var urlQueue = req.url.split('/');
+    var fileName = urlQueue[urlQueue.length-1];
+    urlQueue = urlQueue.splice(0, urlQueue.length-1);
+    var parentUrl = urlQueue.join('/');
     fs.readFile(filePath, function(err, data){
         if(!err){
-            res.render('mocha_result', JSON.parse(data));
+            var data = {
+                fileName: fileName,
+                file: JSON.parse(data),
+                parentUrl: parentUrl
+            };
+            res.render('mocha_result', data);
         }else{
             res.render('mocha_result');
         }

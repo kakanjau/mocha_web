@@ -1,27 +1,78 @@
 doctype html
 html
   head
+    link(rel='stylesheet', href='/stylesheets/bootstrap/bootstrap.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap/bootstrap-theme.css')
+    link(rel='stylesheet', href='/stylesheets/jquery/jquery-ui-1.9.2.custom.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/lib/jquery/jquery-1.8.3.min.js')
+    script(src='/lib/jquery/jquery-ui-1.9.2.custom.min.js')
+    script(src='/lib/bootstrap/bootstrap.js')
   body
-    .dercrip
-      -var d = new Date(stats.start);
-      -d = [d.getFullYear(), d.getMonth()+1, d.getDate()].join('-');
-      div: span 测试时间：#{d} 
-      div: span 测试数量：#{stats.tests}
-      div: span 测试通过：#{stats.passes}
-      div: span 测试失败：#{stats.failures}
+    h4
+      ol.breadcrumb
+        li: a(href='/')首页
+        li: a(href=parentUrl) #{parentUrl.substring(1)}
+        li.active #{fileName}
+    .panel
+      .panel-body
+        -var d = new Date(file.stats.start);
+        -d = [d.getFullYear(), d.getMonth()+1, d.getDate()].join('-');
+        div.text-primary: span 测试时间：#{d} 
+        div.text-primary: span 测试数量：#{file.stats.tests}
+        div.text-primary: span 测试通过：#{file.stats.passes}
+        div.text-primary: span 测试失败：#{file.stats.failures}
 
-    .passed
-      ul
-        each pass in passes
-          li
-            span #{pass.title}
-            span #{pass.fullTitle}
-            span #{pass.duration}
+    .panel.panel-default
+      if file.failures.length > 0
+        .panel-heading 失败列表
+        .panel-body
+          table.table.table-striped.table-hover
+            th
+              td 测试项
+              td 测试时间
+            each failure,index in file.failures
+              tr.failure_simple
+                td #{index+1}
+                td #{failure.fullTitle}
+                td #{failure.duration} ms
+              tr.failure_detail
+                td(colspan=3)
+                  mixin showDetail(o)
+                    ul.list-group
+                      each attr, index in o
+                        if attr
+                          li.list-group-item 
+                            if typeof index == 'string'
+                              h5 #{index}
+                            if typeof attr == 'object' || typeof attr == 'array'
+                              if attr
+                                div(style='padding-left:20px;')
+                                  +showDetail(attr)
+                            else
+                                pre #{attr}
+                  -var e = failure.err;
+                  +showDetail(e)
 
-    .failures
-      ul
-        each failure in failures
-          li
-            span #{failure.title}
-            span #{failure.fullTitle}
-            span #{failure.duration}
+    .panel.panel-default
+      .panel-heading 成功列表
+      .panel-body
+        table.table.table-striped.table-hover
+          th
+            td 测试项
+            td 测试时间
+          each pass,index in file.passes
+            tr
+              td #{index+1}
+              td #{pass.fullTitle}
+              td #{pass.duration} ms
+
+    script.
+      $(function(){
+        $('.failure_simple').on('click', function(){
+          var detail = $(this.nextElementSibling);
+          detail.css('display')=='none'
+            ? detail.show()
+            : detail.hide();
+        })
+      });
